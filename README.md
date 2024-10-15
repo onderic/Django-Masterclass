@@ -13,12 +13,32 @@ A comprehensive resource for Django development, demonstrating best practices in
 ## Installation
 Follow these steps to set up the project locally:
 
-```bash
-# Clone the Repository
-git clone https://github.com/your-username/your-repo-name.git
 
-# Navigate to the Project Directory
-cd your-repo-name
+## Usage
+Guidelines on how to run the project, make API calls, and explore the implemented features.
+
+## Best Practices
+Highlight key best practices demonstrated in the project, such as:
+- Using serializers effectively
+- Implementing permissions and authentication
+- Structuring Django apps for maintainability
+- Writing tests for your code
+
+## Contributing
+Information on how others can contribute to your project.
+
+## License
+Specify the license under which your project is released.
+
+
+### Clone the Repository
+Clone the repository to your local machine using Git:
+```bash
+git clone https://github.com/onderic/Django-Masterclass.git
+
+### Navigate to the Project Directory
+
+cd Django-Masterclass
 
 # Set Up a Virtual Environment
 python -m venv venv
@@ -40,20 +60,4 @@ python manage.py createsuperuser
 
 # Run the Development Server
 python manage.py runserver
-
-## Usage
-Guidelines on how to run the project, make API calls, and explore the implemented features.
-
-## Best Practices
-Highlight key best practices demonstrated in the project, such as:
-- Using serializers effectively
-- Implementing permissions and authentication
-- Structuring Django apps for maintainability
-- Writing tests for your code
-
-## Contributing
-Information on how others can contribute to your project.
-
-## License
-Specify the license under which your project is released.
 
