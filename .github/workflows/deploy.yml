@@ -17,10 +17,9 @@ jobs:
       mysql:
         image: mysql:5.7 
         env:
-            MYSQL_ROOT_PASSWORD: rootpassword  
-            MYSQL_DATABASE: test2               
-            MYSQL_USER: test2                   
-            MYSQL_PASSWORD: 0909 
+            DB_DATABASE: test_db
+            DB_USER: root
+            DB_PASSWORD: root
         ports:
           - 3306:3306  
         options: >-
@@ -46,14 +45,8 @@ jobs:
 
     - name: Wait for MySQL to be ready
       run: |
-        for i in {1..30}; do
-          if mysql -h 127.0.0.1 -u test_user -p'test_password' -e "SHOW DATABASES;"; then
-            echo "MySQL is up!"
-            break
-          fi
-          echo "Waiting for MySQL..."
-          sleep 1
-        done
+        sudo /etc/init.d/mysql start
+          mysql -e "CREATE DATABASE IF NOT EXISTS $DB_DATABASE;" -u$DB_USER -p$DB_PASSWORD
 
     - name: Run tests
       env:
