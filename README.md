@@ -10,9 +10,6 @@ A comprehensive resource for Django development, demonstrating best practices in
 - Integration of third-party libraries
 - Testing strategies and methodologies
 
-## Installation
-Follow these steps to set up the project locally:
-
 
 ## Usage
 Guidelines on how to run the project, make API calls, and explore the implemented features.
@@ -29,6 +26,10 @@ Information on how others can contribute to your project.
 
 ## License
 Specify the license under which your project is released.
+
+## Installation
+Follow these steps to set up the project locally:
+
 
 
 ### Clone the Repository
