@@ -3,7 +3,7 @@ name: MYSQL CI
 on:
   push:
     branches:
-      - main
+      - else
 
 jobs:
   test:

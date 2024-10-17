@@ -36,6 +36,7 @@ LOCAL_APPS = [
     "royal.api.apps.ApiConfig",
     "royal.common.apps.CommonConfig",
     "royal.users.apps.UsersConfig",
+    "royal.market.apps.MarketConfig",
 ]
 
 THIRD_PARTY_APPS = [
@@ -158,7 +159,7 @@ STATIC_URL = "/static/"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 REST_FRAMEWORK = {
-    "EXCEPTION_HANDLER": "royal.api.exception_handlers.drf_default_with_modifications_exception_handler",
+    "EXCEPTION_HANDLER": "royal.api.exception_handlers.custome_error_handler",
     "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
     "DEFAULT_AUTHENTICATION_CLASSES": [],
 }

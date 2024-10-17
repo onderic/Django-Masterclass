@@ -7,9 +7,10 @@ def user_get_login_data(*, user:BaseUser):
     return{
         "id": user.id,
         "email": user.email,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
         "is_active": user.is_active,
-        "is_admin": user.is_admin,
-        "is_superuser": user.is_superuser,
+      
     }
 
 def user_list(*, filters=None) -> QuerySet[BaseUser]:

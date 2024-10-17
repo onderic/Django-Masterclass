@@ -43,8 +43,6 @@ class UserListApi(ApiAuthMixin,APIView):
             fields = ("id", "email", "is_admin","first_name","last_name","jwt_key")
 
     def get(self, request):
-       
-        # Make sure the filters are valid, if passed
         filters_serializer = self.FilterSerializer(data=request.query_params)
         filters_serializer.is_valid(raise_exception=True)
 

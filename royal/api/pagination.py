@@ -35,10 +35,6 @@ class LimitOffsetPagination(_LimitOffsetPagination):
         )
 
     def get_paginated_response(self, data):
-        """
-        We redefine this method in order to return `limit` and `offset`.
-        This is used by the frontend to construct the pagination itself.
-        """
         return Response(
             OrderedDict(
                 [

@@ -8,7 +8,6 @@ from rest_framework_jwt.views import ObtainJSONWebTokenView
 from royal.api.mixins import ApiAuthMixin
 from royal.authentication.services import auth_logout
 from royal.users.selectors import user_get_login_data
-from django.views.decorators.csrf import csrf_exempt
 
 
 class UserSessionLoginApi(APIView):
