@@ -14,7 +14,7 @@ class UserUpdateTests(TestCase):
             "last_name": "updated"
         }
 
-        user = user_update(user=self.user, data=data)
+        user = user_update(user_id=self.user.id, data=data)
 
         self.assertEqual(user.first_name, "onderi")
         self.assertEqual(user.last_name, "updated")

@@ -30,7 +30,7 @@ class UserCreateApi(APIView):
 
 class UserListApi(ApiAuthMixin,APIView):
     class Pagination(LimitOffsetPagination):
-        default_limit = 2
+        default_limit = 5
 
     class FilterSerializer(serializers.Serializer):
         id = serializers.IntegerField(required=False)
@@ -65,21 +65,15 @@ class UserUpdateApi(APIView):
         serializer = self.InputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        user = get_object_or_404(BaseUser, id=user_id)
-
-        updated_user = user_update(user=user, data=serializer.validated_data)
-
-        return Response({
-            "email": updated_user.email,
-            "firstname": updated_user.first_name,
-            "lastname": updated_user.last_name,
-        }, status=status.HTTP_200_OK)
+        user = user_update(user_id=user_id, data=serializer.validated_data)
+        output_serializer = self.InputSerializer(user)
+        return Response({"User": output_serializer.data}, status=status.HTTP_200_OK)
+    
 
 class UserDeleteApi(APIView):
 
     def delete(self, request, user_id):
 
-        user = get_object_or_404(BaseUser, id=user_id)
-        delete_user(user_id=user.id)
+        delete_user(user_id=user_id)
 
         return Response(status=status.HTTP_200_OK)
