@@ -4,23 +4,9 @@ from .apis import (
     UserJwtLoginApi,
     UserJwtLogoutApi,
     UserMeApi,
-    UserSessionLoginApi,
-    UserSessionLogoutApi,
 )
 
 urlpatterns = [
-    # path(
-    #     "session/",
-    #     include(
-    #         (
-    #             [
-    #                 path("login/", UserSessionLoginApi.as_view(), name="login"),
-    #                 path("logout/", UserSessionLogoutApi.as_view(), name="logout"),
-    #             ],
-    #             "session",
-    #         )
-    #     ),
-    # ),
     path(
         "jwt/",
         include(

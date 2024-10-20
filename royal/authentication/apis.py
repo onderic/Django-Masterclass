@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.contrib.auth import authenticate, login, logout
 from rest_framework import serializers, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -10,39 +9,6 @@ from royal.authentication.services import auth_logout
 from royal.users.selectors import user_get_login_data
 
 
-class UserSessionLoginApi(APIView):
-    class InputSerializer(serializers.Serializer):
-        email = serializers.EmailField()
-        password = serializers.CharField()
-    
-    def post(self, request):
-        serializer = self.InputSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        user = authenticate(request, **serializer.validated_data)
-
-        if user is None:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        
-        login(request, user)
-
-        data = user_get_login_data(user=user)
-        session_key = request.session.session_key
-
-        return Response({"session": session_key, "data": data})
-    
-class UserSessionLogoutApi(APIView):
-    def get(self, request):
-        logout(request)
-
-        return Response()
-    
-    def post(self, request):
-        logout(request)
-
-        return Response()
-    
-    
 class UserJwtLoginApi(ObtainJSONWebTokenView):
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
@@ -53,7 +19,7 @@ class UserJwtLoginApi(ObtainJSONWebTokenView):
         return response
 
 
-class UserJwtLogoutApi(ApiAuthMixin,APIView):
+class UserJwtLogoutApi(ApiAuthMixin, APIView):
     def post(self, request):
         auth_logout(request.user)
 

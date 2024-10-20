@@ -2,9 +2,6 @@ import datetime
 
 from config.env import env
 
-# For more settings
-# Read everything from here - https://styria-digital.github.io/django-rest-framework-jwt/#additional-settings
-
 # Default to 7 days
 JWT_EXPIRATION_DELTA_SECONDS = env("JWT_EXPIRATION_DELTA_SECONDS", default=60 * 60 * 24 * 7)
 JWT_AUTH_COOKIE = env("JWT_AUTH_COOKIE", default="jwt")
