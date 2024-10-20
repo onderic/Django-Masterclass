@@ -30,10 +30,10 @@ def delete_product(product_id:int) ->  None:
     product = get_object_or_404(Product, id=product_id)
     product.delete()
 
+
 @transaction.atomic
-def create_order(user_id, order_items_data):
-    user = get_object_or_404(BaseUser, id=user_id)
-    order = Order(user=user)
+def create_order(user, order_items_data):
+    order = Order(user=user) 
     order.save()
 
     total_price = 0
@@ -44,14 +44,14 @@ def create_order(user_id, order_items_data):
 
         product = get_object_or_404(Product, id=product_id)
 
-        order_item = OrderItem(order=order,product=product, quantity=quantity)
+        order_item = OrderItem(order=order, product=product, quantity=quantity)
 
         try:
             order_item.save()
             total_price += order_item.total_price
         except ValidationError as e:
             raise ValidationError(f"Error adding item {product.name}: {str(e)}")
-    
+
     order.total_price = total_price
     order.save()
 

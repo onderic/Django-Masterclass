@@ -1,15 +1,17 @@
-from django.shortcuts import get_object_or_404
 from rest_framework import serializers,status
 from rest_framework.views import APIView
 from royal.api.mixins import ApiAuthMixin
-from royal.api.permissions import IsAdminOrSuperuser,IsSuperuser,IsAdmin
+from royal.api.permissions import IsAdminOrSuperuser
 from rest_framework.response import Response
-
+from .serializers import OrderSerializer
 from royal.market.models import Product
-
-from .services import product_create,product_update,delete_product,create_order
-from .selectors import product_list
-
+from .services import (
+    product_create,
+    product_update,
+    delete_product,
+    create_order
+)
+from .selectors import product_list,order_list
 from royal.api.pagination import (
     LimitOffsetPagination,
     get_paginated_response,
@@ -17,7 +19,6 @@ from royal.api.pagination import (
 
 
 class ProductCreateApi(ApiAuthMixin, APIView):
-
     permission_classes = [IsAdminOrSuperuser]
 
     class InputSerializer(serializers.Serializer):
@@ -114,7 +115,7 @@ class OrderApi(ApiAuthMixin, APIView):
         order_items_data = serializer.validated_data['order_items']
         user = request.user
 
-        order = create_order(user_id=user.id, order_items_data=order_items_data)
+        order = create_order(user, order_items_data)
         
         return Response(
             {
@@ -123,3 +124,54 @@ class OrderApi(ApiAuthMixin, APIView):
                 "created_at": order.created_at
 
             } ,status=status.HTTP_200_OK)
+
+
+
+class OrderListApi(ApiAuthMixin, APIView):
+    permission_classes = [IsAdminOrSuperuser] 
+    OutputSerializer = OrderSerializer
+
+    class Pagination(LimitOffsetPagination):
+        default_limit = 5
+
+    def get(self, request):
+        filters_serializer = self.OutputSerializer(data=request.query_params, partial=True)
+        filters_serializer.is_valid(raise_exception=True)
+
+        filters = filters_serializer.validated_data
+        filters['status'] = 'P'
+
+        orders = order_list(filters=filters)
+
+        return get_paginated_response(
+            pagination_class=self.Pagination,
+            serializer_class=self.OutputSerializer,
+            queryset=orders,
+            request=request,
+            view=self
+        )
+
+
+
+class UserOrderListApi(ApiAuthMixin, APIView):
+    OutputSerializer = OrderSerializer
+
+    class Pagination(LimitOffsetPagination):
+        default_limit = 5
+
+    def get(self, request):
+        user = request.user
+        filters = {
+            'user': user.id, 
+            'status': 'P' 
+        }
+
+        orders = order_list(filters=filters)
+
+        return get_paginated_response(
+            pagination_class=self.Pagination,
+            serializer_class=self.OutputSerializer,
+            queryset=orders,
+            request=request,
+            view=self
+        )

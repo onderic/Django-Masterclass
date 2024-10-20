@@ -1,5 +1,13 @@
 from django.urls import path
-from .apis import ProductCreateApi,ProductListApi,UpdateProductApi,DeleteProductApi, OrderApi
+from .apis import (
+    ProductCreateApi,
+    ProductListApi,
+    UpdateProductApi,
+    DeleteProductApi, 
+    OrderApi, 
+    OrderListApi,
+    UserOrderListApi
+)
 
 urlpatterns = [
     path("list/", ProductListApi.as_view(), name="product-list"), 
@@ -9,5 +17,7 @@ urlpatterns = [
 
     # orders
     path("order/create/", OrderApi.as_view(), name="order-create"),
+    path("order/list/", OrderListApi.as_view(), name="order-list"),
+    path("order/user/list/", UserOrderListApi.as_view(), name="order-list"),
 
 ]

@@ -55,8 +55,6 @@ class Order(BaseModel):
         self.status = self.OrderStatus.CANCELLED
         self.save()
 
-    def was_ordered_recently(self):
-        return self.created_at >= timezone.now() - timezone.timedelta(days=7)
 
 
 class OrderItem(models.Model):
