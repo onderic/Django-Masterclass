@@ -95,7 +95,7 @@ if os.environ.get("GITHUB_WORKFLOW"):
             "ENGINE": "django.db.backends.mysql",
             "NAME": "github_actions",  
             "USER": "root",            
-            "PASSWORD": "",          
+            "PASSWORD": "zergling",          
             "HOST": "127.0.0.1",    
             "PORT": "3306",           
         }
