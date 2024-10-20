@@ -20,7 +20,8 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: zergling
           MYSQL_DATABASE: mysql
-        ports: ['3306:3306']
+        ports:
+          - '3306:3306'
 
     steps:
     - uses: actions/checkout@v2
@@ -34,6 +35,17 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+
+    - name: Wait for MySQL to be ready
+      run: |
+        for i in $(seq 1 30); do
+          if echo "SELECT 1;" | mysql -h 127.0.0.1 -u root -pzergling mysql; then
+            echo "MySQL is ready!"
+            break
+          fi
+          echo "Waiting for MySQL..."
+          sleep 2
+        done
 
     - name: Run Migrations
       run: python manage.py migrate
