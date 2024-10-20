@@ -19,7 +19,7 @@ jobs:
         image: mysql:8.0  
         env:
           MYSQL_ROOT_PASSWORD: zergling
-          MYSQL_DATABASE: mysql
+          MYSQL_DATABASE: github_actions
         ports:
           - '3306:3306'
 
@@ -39,7 +39,7 @@ jobs:
     - name: Wait for MySQL to be ready
       run: |
         for i in $(seq 1 30); do
-          if echo "SELECT 1;" | mysql -h 127.0.0.1 -u root -pzergling mysql; then
+          if echo "SELECT 1;" | mysql -h 127.0.0.1 -u root -pzergling github_actions; then
             echo "MySQL is ready!"
             break
           fi
@@ -51,7 +51,7 @@ jobs:
       run: python manage.py migrate
       env: 
         DBENGINE: django.db.backends.mysql
-        DBNAME: mysql
+        DBNAME: github_actions
         DBUSER: root
         DBPASSWORD: zergling
         DBHOST: 127.0.0.1
@@ -62,7 +62,7 @@ jobs:
         python manage.py test royal
       env: 
         DBENGINE: django.db.backends.mysql
-        DBNAME: mysql
+        DBNAME: github_actions 
         DBUSER: root
         DBPASSWORD: zergling
         DBHOST: 127.0.0.1
