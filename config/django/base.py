@@ -25,6 +25,8 @@ LOCAL_APPS = [
     "royal.common.apps.CommonConfig",
     "royal.users.apps.UsersConfig",
     "royal.market.apps.MarketConfig",
+    "royal.notifications.apps.NotificationsConfig",
+    "royal.tasks.apps.TasksConfig",
 ]
 
 THIRD_PARTY_APPS = [
@@ -33,6 +35,8 @@ THIRD_PARTY_APPS = [
     "django_filters",
     "corsheaders",
     "django_extensions",
+    "django_celery_results",
+    "django_celery_beat",
 ]
 
 INSTALLED_APPS = [
@@ -159,6 +163,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 from config.settings.cors import *  
+
+from config.settings.celery import * 
+
+from config.settings.email_sending import *
 
 from config.settings.jwt import *  
 
